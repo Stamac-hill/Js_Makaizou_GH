@@ -14,6 +14,9 @@
     {q: 'What is C?', a: ['C0', 'C1', 'C2']}
   ];
 
+  //1206↓出題順のシャッフルと再出題抑制は、これであっさり行けた。
+  quizSet = shuffle(quizSet);
+
   var currentNum = 0;
   var isAnswered;
   var score = 0;
