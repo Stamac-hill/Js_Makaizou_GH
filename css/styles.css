@@ -4,7 +4,8 @@ body {
 }
 
 .container {
-  width: 400px;
+  /* 横幅の制限を解除 */
+  /* width: 400px; */
   margin: 10px auto;
   position: relative;
 }
@@ -29,6 +30,10 @@ body {
   border-radius: 4px;
   padding: 10px;
   margin-bottom: 10px;
+  /* ★Liを横に配置する */
+  display: inline-block;
+  /* ボタンの横幅 */
+  width: 300px;
 }
 
 #answers > li:hover {
@@ -72,7 +77,8 @@ body {
   right: 0;
   margin: 0 auto;
   background: #fff;
-  width: 300px;
+  /* ★横幅の制限を解除 */
+  /* width: 300px; */
   border-radius: 3px;
   padding: 30px;
   text-align: center;
@@ -92,4 +98,10 @@ body {
 
 #result.show {
   top: 50px;
+}
+
+.news .flex {
+  /* ★画面に応じてサイズを変更する */
+  display: flex;
+  justify-content: space-between;
 }
