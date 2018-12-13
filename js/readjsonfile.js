@@ -1,7 +1,7 @@
 function loadJsonFile() {
   $(function() {
-    $.$.getJSON('data.json', function(json, data) {
-      var ulObj = $("#demo")
+    $.getJSON('data.json', function(data) {
+      var ulObj = $("#trial")
       var len = data.length;
 
       for (var i = 0; i < len; i++) {
