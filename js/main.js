@@ -90,3 +90,23 @@
   setEvents();
 
 })();
+
+function setGreetings(){
+  //挨拶出力用
+  var nowTime = new Date();
+  var nowHour = nowTime.getHours();
+  var nowMin = nowTime.getMinutes();
+  var nowSec = nowTime.getSeconds();
+  var greetMsg = "";
+  if (nowHour >= 5 & nowHour < 10){
+    greetMsg = "おはようございます。";
+  } else if(nowHour >= 10 & nowHour < 18){
+    greetMsg = "こんにちは。";
+  } else{
+    greetMsg = "こんばんは。";
+  }
+  var dispTime = greetMsg + "今" + nowHour + "時" + nowMin + "分" + nowSec + "秒です。";
+  document.getElementById("greetings").textContent = dispTime;
+
+}
+setInterval('setGreetings()',1000);
