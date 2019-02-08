@@ -7,6 +7,8 @@
   var shuffledAnswers;
   var result = document.getElementById('result');
   var scoreLabel = document.querySelector('#result > p');
+  //ダウンロードボタン
+  var result_download = document.getElementById('result_download');
 
   var quizSet = ITEM;
 
@@ -60,12 +62,14 @@
       // setQuiz();
       if (currentNum === quizSet.length) {
         // show score
-        // console.log('Score: ' + score + ' / ' + quizSet.length);
         scoreLabel.textContent = 'Score: ' + score + ' / ' + quizSet.length;
         result.classList.add('show');
       } else {
         setQuiz();
       }
+    });
+    result_download.addEventListener('click', function() {
+      setBlob('result_download', 'サンプルテキスト。本日は晴天なり。');
     });
   }
 
@@ -86,27 +90,40 @@
     currentNum++;
   }
 
+  function setBlob(id, result_download) {
+    var blob = new Blob([result_download], {
+      'type': 'text/plain'
+    });
+    if (window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(blob, "your_score.txt");
+      // msSaveOrOpenBlobの場合はファイルを保存せずに開ける
+      window.navigator.msSaveOrOpenBlob(blob, "your_score.txt");
+    } else {
+      window.URL = window.URL || window.webkitURL;
+      $('#' + id).attr('href', window.URL.createObjectURL(blob));
+    }
+  }
+
+  setInterval('setGreetings()', 1000);
   setQuiz();
   setEvents();
 
 })();
 
-function setGreetings(){
+function setGreetings() {
   //挨拶出力用
   var nowTime = new Date();
   var nowHour = nowTime.getHours();
   var nowMin = nowTime.getMinutes();
   var nowSec = nowTime.getSeconds();
   var greetMsg = "";
-  if (nowHour >= 5 & nowHour < 10){
-    greetMsg = "おはようございます。";
-  } else if(nowHour >= 10 & nowHour < 18){
-    greetMsg = "こんにちは。";
-  } else{
-    greetMsg = "こんばんは。";
+  if (nowHour >= 5 & nowHour < 10) {
+    greetMsg = "労働者諸君、おはようございます。";
+  } else if (nowHour >= 10 & nowHour < 18) {
+    greetMsg = "労働者諸君、こんにちは。";
+  } else {
+    greetMsg = "労働者諸君、こんばんは。";
   }
   var dispTime = greetMsg + "今" + nowHour + "時" + nowMin + "分" + nowSec + "秒です。";
   document.getElementById("greetings").textContent = dispTime;
-
 }
-setInterval('setGreetings()',1000);

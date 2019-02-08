@@ -100,6 +100,13 @@ body {
   top: 50px;
 }
 
+#result_download {
+  margin-top:10px;
+  display: block;
+  text-decoration: none;
+  color: #fff;
+}
+
 .news .flex {
   /* ★画面に応じてサイズを変更する */
   display: flex;
