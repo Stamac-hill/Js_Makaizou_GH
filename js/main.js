@@ -18,6 +18,7 @@
   var currentNum = 0;
   var isAnswered;
   var score = 0;
+  var answerStatus = "";//解答状況
 
   function shuffle(arr) {
     var i;
@@ -68,8 +69,12 @@
         setQuiz();
       }
     });
+    //ダウンロードボタン押下時のイベントリスナ
     result_download.addEventListener('click', function() {
-      setBlob('result_download', 'サンプルテキスト。本日は晴天なり。');
+      //解答状況に合計点を追加
+      answerStatus += "総合成績 ： " + score + ' / ' + quizSet.length;
+      //解答状況をファイルに書き込みDLする関数を呼び出し
+      setBlob('result_download', answerStatus);
     });
   }
 
@@ -78,22 +83,25 @@
       return;
     }
     isAnswered = true;
+    var dispNum = currentNum + 1;//解答結果出力用設問番号
     if (node.textContent === quizSet[currentNum].a[0]) {
       node.textContent += ' ... Correct!';
       node.classList.add('correct');
       score++;
+      //該当問題の解答状況
+      answerStatus += dispNum + " : 正解\n";
     } else {
       node.textContent += ' ... Wrong!';
       node.classList.add('wrong');
+      //該当問題の解答状況。不正解時は正解の提示も行う。
+      answerStatus += dispNum + " : 残念。正解は「" + quizSet[currentNum].a[0] + "」\n";
     }
     btn.classList.remove('disabled');
     currentNum++;
   }
-
+  //解答状況をファイルに書き込む。
   function setBlob(id, result_download) {
-    var blob = new Blob([result_download], {
-      'type': 'text/plain'
-    });
+    var blob = new Blob([result_download], {'type': 'text/plain'});
     if (window.navigator.msSaveBlob) {
       window.navigator.msSaveBlob(blob, "your_score.txt");
       // msSaveOrOpenBlobの場合はファイルを保存せずに開ける
