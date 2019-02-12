@@ -7,6 +7,8 @@
   var shuffledAnswers;
   var result = document.getElementById('result');
   var scoreLabel = document.querySelector('#result > p');
+  //ダウンロードボタン
+  var result_download = document.getElementById('result_download');
 
   var quizSet = ITEM;
 
@@ -16,6 +18,7 @@
   var currentNum = 0;
   var isAnswered;
   var score = 0;
+  var answerStatus = "";//解答状況
 
   function shuffle(arr) {
     var i;
@@ -60,12 +63,18 @@
       // setQuiz();
       if (currentNum === quizSet.length) {
         // show score
-        // console.log('Score: ' + score + ' / ' + quizSet.length);
         scoreLabel.textContent = 'Score: ' + score + ' / ' + quizSet.length;
         result.classList.add('show');
       } else {
         setQuiz();
       }
+    });
+    //ダウンロードボタン押下時のイベントリスナ
+    result_download.addEventListener('click', function() {
+      //解答状況に合計点を追加
+      answerStatus += "総合成績 ： " + score + ' / ' + quizSet.length;
+      //解答状況をファイルに書き込みDLする関数を呼び出し
+      setBlob('result_download', answerStatus);
     });
   }
 
@@ -74,39 +83,55 @@
       return;
     }
     isAnswered = true;
+    var dispNum = currentNum + 1;//解答結果出力用設問番号
     if (node.textContent === quizSet[currentNum].a[0]) {
       node.textContent += ' ... Correct!';
       node.classList.add('correct');
       score++;
+      //該当問題の解答状況
+      answerStatus += dispNum + " : 正解\n";
     } else {
       node.textContent += ' ... Wrong!';
       node.classList.add('wrong');
+      //該当問題の解答状況。不正解時は正解の提示も行う。
+      answerStatus += dispNum + " : 残念。正解は「" + quizSet[currentNum].a[0] + "」\n";
     }
     btn.classList.remove('disabled');
     currentNum++;
   }
+  //解答状況をファイルに書き込む。
+  function setBlob(id, result_download) {
+    var blob = new Blob([result_download], {'type': 'text/plain'});
+    if (window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(blob, "your_score.txt");
+      // msSaveOrOpenBlobの場合はファイルを保存せずに開ける
+      window.navigator.msSaveOrOpenBlob(blob, "your_score.txt");
+    } else {
+      window.URL = window.URL || window.webkitURL;
+      $('#' + id).attr('href', window.URL.createObjectURL(blob));
+    }
+  }
 
+  setInterval('setGreetings()', 1000);
   setQuiz();
   setEvents();
 
 })();
 
-function setGreetings(){
+function setGreetings() {
   //挨拶出力用
   var nowTime = new Date();
   var nowHour = nowTime.getHours();
   var nowMin = nowTime.getMinutes();
   var nowSec = nowTime.getSeconds();
   var greetMsg = "";
-  if (nowHour >= 5 & nowHour < 10){
-    greetMsg = "おはようございます。";
-  } else if(nowHour >= 10 & nowHour < 18){
-    greetMsg = "こんにちは。";
-  } else{
-    greetMsg = "こんばんは。";
+  if (nowHour >= 5 & nowHour < 10) {
+    greetMsg = "労働者諸君、おはようございます。";
+  } else if (nowHour >= 10 & nowHour < 18) {
+    greetMsg = "労働者諸君、こんにちは。";
+  } else {
+    greetMsg = "労働者諸君、こんばんは。";
   }
   var dispTime = greetMsg + "今" + nowHour + "時" + nowMin + "分" + nowSec + "秒です。";
   document.getElementById("greetings").textContent = dispTime;
-
 }
-setInterval('setGreetings()',1000);
