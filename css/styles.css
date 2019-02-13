@@ -100,6 +100,16 @@ body {
   top: 50px;
 }
 
+#btn_Output {
+  background: #3498db;
+  border-radius: 4px;
+  tpadding: 10px;
+  width: 10%;
+  text-align: right;
+  color: #fff;
+  box-shadow: 0 3px 0 #2880b9;
+}
+
 .news .flex {
   /* ★画面に応じてサイズを変更する */
   display: flex;

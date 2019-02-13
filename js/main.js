@@ -1,6 +1,7 @@
 (function() {
   'use strict';
 
+  var question = document.getElementById('btn_output');
   var question = document.getElementById('question');
   var btn = document.getElementById('btn');
   var answers = document.querySelectorAll('#answers > li');
@@ -110,3 +111,12 @@ function setGreetings(){
 
 }
 setInterval('setGreetings()',1000);
+
+// 問題の出力
+function setOutQuestion(){
+  btn_Output.addEventListener('click', function() {
+    // alert('JavaScriptのアラート');
+    window.confirm("問題を出力しますか？")
+  });
+}
+setOutQuestion();
