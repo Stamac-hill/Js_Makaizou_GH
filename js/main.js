@@ -87,8 +87,53 @@
     currentNum++;
   }
 
+  // 問題の出力
+  function setOutQuestion(){
+    btn_Output.addEventListener('click', function() {
+      var msgOutput = "問題を出力しますか？" ;
+      var magAllQuestion = "全ての問題を出力しますか。";
+      // var msgOutputWrite = "問題を出力しました。";
+      var msgOutputCancel = "出力をキャンセルしました。";
+
+      if (confirm(msgOutput)){
+        // 全ての問題を出力するか判定
+        if (confirm(magAllQuestion)){
+          var intI = 0;
+          var quizData = "";
+          for (intI = 0; intI < quizSet.length; intI++ ){
+            if (intI == 0){
+              quizData = quizSet[intI].q;
+            } else {
+              quizData = quizData + "\n" + quizSet[intI].q;
+            }
+          }
+        } else {
+          var quizData = quizSet[currentNum].q;
+        }
+
+        var writeData = new Blob([ quizData ], { type : "text/plain" });
+        // IEか他ブラウザかの判定
+        if (window.navigator.msSaveBlob) {
+            window.navigator.msSaveOrOpenBlob(writeData, "test.txt");
+        } else {
+            // makeURL.href = href(crea\teObjectURL(writeData));
+            // makeURL.download = "test.txt";
+            // makeURL.style.display = 'none';
+            // document.body.appendChild(makeURL);
+            // makeURL.click();
+            document.getElementById("btn_Output").href = window.URL.createObjectURL(writeData);
+        }
+        // alert(msgOutputWrite);
+      } else {
+        alert(msgOutputCancel);
+      }
+    });
+  }
+
   setQuiz();
   setEvents();
+
+  setOutQuestion();
 
 })();
 
@@ -111,12 +156,3 @@ function setGreetings(){
 
 }
 setInterval('setGreetings()',1000);
-
-// 問題の出力
-function setOutQuestion(){
-  btn_Output.addEventListener('click', function() {
-    // alert('JavaScriptのアラート');
-    window.confirm("問題を出力しますか？")
-  });
-}
-setOutQuestion();
