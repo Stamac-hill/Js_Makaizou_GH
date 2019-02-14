@@ -91,8 +91,8 @@
   function setOutQuestion(){
     btn_Output.addEventListener('click', function() {
       var msgOutput = "問題を出力しますか？" ;
-      var magAllQuestion = "全ての問題を出力しますか。";
-      // var msgOutputWrite = "問題を出力しました。";
+      var magAllQuestion = "全ての問題を出力しますか。\n（「いいえ」の場合は、現在の問題を出力します。）";
+      var msgOutputWrite = "件の問題を出力しました。";
       var msgOutputCancel = "出力をキャンセルしました。";
 
       if (confirm(msgOutput)){
@@ -108,6 +108,7 @@
             }
           }
         } else {
+          intI = 1
           var quizData = quizSet[currentNum].q;
         }
 
@@ -119,7 +120,7 @@
         } else {
             document.getElementById("btn_Output").href = window.URL.createObjectURL(writeData);
         }
-        // alert(msgOutputWrite);
+        alert(intI + msgOutputWrite);
       } else {
         alert(msgOutputCancel);
       }
