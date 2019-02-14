@@ -111,16 +111,12 @@
           var quizData = quizSet[currentNum].q;
         }
 
+        // var writeData = new Blob([ quizData ], { type : "text/plain" });
         var writeData = new Blob([ quizData ], { type : "text/plain" });
         // IEか他ブラウザかの判定
         if (window.navigator.msSaveBlob) {
             window.navigator.msSaveOrOpenBlob(writeData, "test.txt");
         } else {
-            // makeURL.href = href(crea\teObjectURL(writeData));
-            // makeURL.download = "test.txt";
-            // makeURL.style.display = 'none';
-            // document.body.appendChild(makeURL);
-            // makeURL.click();
             document.getElementById("btn_Output").href = window.URL.createObjectURL(writeData);
         }
         // alert(msgOutputWrite);
