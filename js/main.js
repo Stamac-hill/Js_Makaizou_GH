@@ -93,6 +93,13 @@
     } else {
       node.textContent += ' ... Wrong!';
       node.classList.add('wrong');
+      //正解選択肢の表示。色のみ変更。
+      var i;
+      for (i = 0; i < answers.length; i++) {
+        if (answers[i].textContent == quizSet[currentNum].a[0]) {
+          answers[i].classList.add('correct');
+        }
+      }
       //該当問題の解答状況。不正解時は正解の提示も行う。
       answerStatus += dispNum + " : 残念。正解は「" + quizSet[currentNum].a[0] + "」\n";
     }
