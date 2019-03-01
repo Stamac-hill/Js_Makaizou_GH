@@ -118,11 +118,15 @@
         if (window.navigator.msSaveBlob) {
             window.navigator.msSaveOrOpenBlob(writeData, "test.txt");
         } else {
+            // ダウンロードのリンク設定
             document.getElementById("btn_Output").href = window.URL.createObjectURL(writeData);
         }
         alert(intI + msgOutputWrite);
       } else {
         alert(msgOutputCancel);
+        // ダウンロードのリンク解除
+        var element = document.getElementById("btn_Output");
+        element.removeAttribute("href");
       }
     });
   }
