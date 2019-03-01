@@ -91,25 +91,25 @@
   function setOutQuestion(){
     btn_Output.addEventListener('click', function() {
       var msgOutput = "問題を出力しますか？" ;
-      var magAllQuestion = "全ての問題を出力しますか。\n（「いいえ」の場合は、現在の問題を出力します。）";
+      var magAllQuestion = "問題を出力しますか。\n（最終問題のみ全問出力します。）";
       var msgOutputWrite = "件の問題を出力しました。";
       var msgOutputCancel = "出力をキャンセルしました。";
 
       if (confirm(msgOutput)){
         // 全ての問題を出力するか判定
-        if (confirm(magAllQuestion)){
+        if (currentNum == quizSet.length - 1){
           var intI = 0;
           var quizData = "";
           for (intI = 0; intI < quizSet.length; intI++ ){
             if (intI == 0){
-              quizData = quizSet[intI].q;
+              quizData = (intI + 1) + "問目：" + quizSet[intI].q;
             } else {
-              quizData = quizData + "\n" + quizSet[intI].q;
+              quizData = quizData + "\n" + (intI + 1) + "問目：" + quizSet[intI].q;
             }
           }
         } else {
-          intI = 1
-          var quizData = quizSet[currentNum].q;
+          intI = 1;
+          var quizData = (currentNum + 1) + "問目：" + quizSet[currentNum].q;
         }
 
         // var writeData = new Blob([ quizData ], { type : "text/plain" });
