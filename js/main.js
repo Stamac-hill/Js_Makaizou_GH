@@ -97,6 +97,7 @@
       var i;
       for (i = 0; i < answers.length; i++) {
         if (answers[i].textContent == quizSet[currentNum].a[0]) {
+          answers[i].textContent += ' ... Correct!';
           answers[i].classList.add('correct');
         }
       }
